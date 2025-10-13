@@ -9,6 +9,22 @@
             rel="stylesheet"
             href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@latest/new.min.css"
         />
+        <style>
+            .spinning-logo {
+                display: inline-block;
+            }
+            .spinning-logo.spin {
+                animation: spin 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            }
+            @keyframes spin {
+                from {
+                    transform: rotate(0deg);
+                }
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+        </style>
         <script>
             document.addEventListener("DOMContentLoaded", function () {
                 const domain = window.location.hostname || "example.com";
@@ -30,6 +46,16 @@
                 buyLink.addEventListener("click", function (e) {
                     e.preventDefault();
                     document.getElementById("escrow-form").submit();
+                });
+
+                // Handle spinning logo - only once
+                const logo = document.querySelector(".spinning-logo");
+                let hasSpun = false;
+                logo.addEventListener("mouseenter", function () {
+                    if (!hasSpun) {
+                        hasSpun = true;
+                        logo.classList.add("spin");
+                    }
                 });
             });
         </script>
@@ -81,9 +107,10 @@
         </form>
         <a href="https://lineofflig.ht"
             ><img
+                class="spinning-logo"
                 src="lineofflight.jpg?v={{ site.time | date: '%s' }}"
                 alt="Line of Flight"
-                width="40"
+                width="60"
         /></a>
     </body>
 </html>
